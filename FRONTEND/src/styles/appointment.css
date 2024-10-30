@@ -1,0 +1,86 @@
+.Main_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  background-color: #2980b9;
+  border-radius: 10px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+.hospital_logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 15px; 
+}
+
+.title-content {
+  text-align: left;
+}
+
+.Main_div_title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+
+.Main_div_title span {
+  color: #e74c3c;
+}
+
+h5 {
+  font-size: 18px;
+  color: #7f8c8d;
+  margin: 0;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.appointment-card {
+  background-color: #ecf0f1;
+  border: 1px solid #bdc3c7;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.appointment-card h4 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 20px;
+}
+
+.appointment-card p {
+  margin: 5px 0;
+  color: #34495e;
+  font-size: 16px;
+}
+.icon-right {
+  font-size: 24px;
+  color: #2980b9; 
+  margin-left: 15px; /
+}
