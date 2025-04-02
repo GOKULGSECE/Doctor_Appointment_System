@@ -22,12 +22,14 @@ const Login = () => {
         setLoading(false);
         if (role === "user") {
           navigate("/homepage");
-        } else {
+        } else if (role === "admin") {
           navigate("/adminhomepage");
+        } else if (role === "doctor") {
+          navigate("/doctorpage");
         }
-      }, 3000); 
+      }, 1500); 
     } catch (error) {
-      setLoading(false); 
+      setLoading(false);
       message.error("User credentials are wrong");
     }
   };
@@ -79,6 +81,7 @@ const Login = () => {
                 >
                   <Radio value="user">User</Radio>
                   <Radio value="admin">Admin</Radio>
+                  <Radio value="doctor">Doctor</Radio>
                 </Radio.Group>
               </Form.Item>
 

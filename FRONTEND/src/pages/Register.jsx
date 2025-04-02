@@ -11,9 +11,7 @@ const Register = () => {
   const onFinishHandler = async (values) => {
     try {
       values.role = role;
-
       const res = await axios.post("http://localhost:5006/user/register", values);
-
       if (res.data.success) {
         message.success("Register Successfully!");
         navigate("/");
@@ -56,6 +54,7 @@ const Register = () => {
             <Radio.Group onChange={(e) => setRole(e.target.value)} value={role}>
               <Radio value="user">User</Radio>
               <Radio value="admin">Admin</Radio>
+              <Radio value="doctor">Doctor</Radio>
             </Radio.Group>
           </Form.Item>
           <Link to="/" className="m-2">

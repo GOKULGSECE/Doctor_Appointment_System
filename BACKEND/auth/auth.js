@@ -13,8 +13,7 @@ const auth = (req,res,next)=>{
         const decoded = jwt.verify(token,"service_Token");
         req.user = decoded;
         next();
-    }catch(err)   
-    {
+    }catch(err){
         res.status(401).json({message:{err}})
     }
 }

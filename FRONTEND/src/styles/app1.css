@@ -443,7 +443,11 @@ header {
 .footer__col i {
   color: var(--primary-color);
 }
-
+.footer__col{
+  padding: 2rem;
+  color: #333333;
+  border-radius:25%;
+}
 .footer__bar {
   background-color: var(--primary-color);
 }

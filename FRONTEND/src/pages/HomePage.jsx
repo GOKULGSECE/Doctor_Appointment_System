@@ -1,10 +1,11 @@
 import {React,useState,useEffect} from "react";
 import  {useNavigate} from "react-router-dom";
 import '../styles/app1.css';
-import { message } from "antd";
+import { Button, message } from "antd";
 import Appointment from "./Appointment";
 // import Cards from "./Cards";
 import axios from "axios"
+import Navbar from "../components/navbar";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -30,7 +31,12 @@ const HomePage = () => {
       console.log(error)
     }
   };
-  
+  const loader = ()=>{
+    message.success("Logout successfull");
+    setTimeout(() => {
+      navigate('/')
+      }, 2000);
+  }
   const handlenavi = () => {
     // window.open("https://healthbooker.onrender.com/doctors", "_blank");
     navigate("/doctorspage")
@@ -47,10 +53,12 @@ const HomePage = () => {
   <link rel="stylesheet" href="styles.css" />
   <title>HealthBooker</title>
   <header>
-    <nav className="section__container nav__container">
+    {/* <nav className="section__container nav__container">
       <div className="nav__logo">Health<span>Booker</span></div>
-      <a href="/contact_us" className="footer__col">Contact Us</a>
-    </nav>
+      <Button className="footer__col">Contact Us</Button>
+      <Button className="footer__col" onClick={loader}>Logout</Button>
+    </nav> */}
+    <Navbar></Navbar>
     <div className="section__container header__container">
       <div className="header__content">
         <h1>Providing an Exceptional Patient Experience</h1>

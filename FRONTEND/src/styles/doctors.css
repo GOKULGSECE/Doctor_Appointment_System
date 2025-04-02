@@ -1,130 +1,98 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
-
-body {
-  font-family: 'Open Sans', sans-serif;
-}
-
-strong {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 50px;
+.doctors_page {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  padding: 20px;
+}
+.all-doctors-container {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  gap: 15px;
+  padding-bottom: 10px;
 }
 
 .doctor-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  display: flex;
+  gap: 15px;
 }
-
 .card_container {
-  border: solid;
-  border-radius: 10%;
-  box-shadow: 2px 2px 2px 2px;
-  padding: 20px;
-  box-sizing: border-box;
+  min-width: 280px;
+  max-width: fit-content;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  background: #fff;
+  transition: transform 0.2s ease-in-out;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  background-image: linear-gradient(pink,aqua,yellow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  max-width: 400px;
+  justify-content: space-between;
+  text-align: center;
+  position: relative;
 }
-.card_container:hover {
-    transform: translateY(-10px);
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
-  }
+
+/* .card_container:hover {
+  transform: scale(1.05);
+} */
 
 .card_container img {
-  width: 144px;
-  border-radius: 50%;
-  align-self: center;
-  margin-bottom: 10px;
+  width: 100%;
+  height: 160px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.card_container p {
+  font-size: 14px;
+  color: #333;
+  margin: 5px 0;
 }
 
-.card_content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+.card_container div {
+  margin: 10px 0;
 }
 
-.languages_known {
+.languages_known, .digital {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
+  justify-content: center;
+  font-size: 13px;
+  color: #555;
 }
-
-.digital {
-  display: flex;
-  justify-content: space-between;
-  font-size: small;
-  margin-left: 10px;
-}
-
 .hospital {
   display: flex;
-  gap: 25px;
+  justify-content: space-between;
+  margin-top: 10px;
 }
 
-.hospital button {
-  background-color: aqua;
-  flex-grow: 1;
-  text-align: center;
-  border-radius: 20px;
-}
-.icon-button1
-{
-    background-color: orange;
-}
-.icon-button2
-{
-    background-color: aqua;
-}
-@media (max-width: 900px) {
-
-  .doctor-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .doctor-cards {
-    grid-template-columns: 1fr;
-  }
-}
-.q,.w,.e,.r{
-    color: red;
-    font-weight: bold;
-}
-.header-container {
-  background-color: #4CAF50;
-  padding: 20px;
-  text-align: center;
-  color: white;
-}
-
-.header-container h1 {
-  margin: 0;
-  font-size: 2em;
-}
-
-.nav-links {
-  list-style-type: none;
-  padding: 0;
-}
-
-.nav-links li {
-  display: inline;
-  margin: 0 15px;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
+.icon-button1, .icon-button2 {
+  flex: 1;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
-.nav-links a:hover {
-  text-decoration: underline;
+.icon-button1 {
+  background-color: #007bff;
+  color: white;
+}
+
+.icon-button2 {
+  background-color: #28a745;
+  color: white;
+}
+
+.icon-button1:hover {
+  background-color: #0056b3;
+}
+
+.icon-button2:hover {
+  background-color: #1e7e34;
 }

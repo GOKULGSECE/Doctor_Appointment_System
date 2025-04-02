@@ -11,6 +11,7 @@ app.use(cors());
 app.use("/admin",require("./routes/adminRoutes.js"));
 app.use("/user", require("./routes/userRoutes.js"));
 app.use("/appoint",require("./routes/bookingRoutes.js"))
+app.use("/doctor",require("./routes/doctorRoutes.js"))
 const port = process.env.PORT || 5002;
 app.listen(port, () => {
   console.log(
