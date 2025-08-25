@@ -1,7 +1,7 @@
 const doctormodel = require("../models/doctor");
 const getdoctors = async (req, res) => {
   try {
-    const doctors = await doctormodel.find();
+    const doctors = await doctormodel.find({});
     res.status(200).json({ success: true, doctors });
   } catch (error) {
     res.status(500).json({ success: false, message: error });

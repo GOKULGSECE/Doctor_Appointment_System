@@ -1,56 +1,37 @@
 import React from 'react';
-import '../styles/doctors.css';
+import { Button } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressCard, faLocationDot, faVideoCamera, faHospital } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { faMapMarkerAlt, faCalendarAlt, faVideo, faHospital } from '@fortawesome/free-solid-svg-icons';
 
-const Doctospage = ({ doctor }) => {
-  const navigate = useNavigate();
-  
-  const handleNavigate = () => {
-    console.log("Navigating to appointment booking");
-    navigate("/homepage");
-  };
+const Doctospage = ({ doctor, onBookNowClick,onKnowYourdoctor }) => {
+    return (
+        <div className="doctor-card">
+            <div className="doctor-card-image">
+                <img src={doctor.imageUrl} alt={doctor.name} />
+            </div>
+            <div className="doctor-card-content">
+                <h4>{doctor.title}</h4>
+                <h2>{doctor.name} <span className="verified-icon">✔️</span></h2>
+                <p>{doctor.about?.substring(0, 120)}... <span className="read-more">Read more</span></p>
 
-  return (
-    <section className='card_container'>
-      <img src='https://wallpapercave.com/wp/wp2555019.jpg' alt='doctor name' />
+                <p className="clinic-name">{doctor.clinicName || "Clinic Name Here"}</p>
+                <p><FontAwesomeIcon icon={faMapMarkerAlt} /> {doctor.location}</p>
 
-      <p><span className='q'>Name: </span>{doctor.name}</p>
-      <p><span className='w'>Qualification: </span>{doctor.qualification}</p>
-      <p><span className='e'>Experience: </span>{doctor.experience} Years</p>        
-      <p><span className='q'>Main Role: </span>{doctor.title}</p>
+                <div className="consultation-types">
+                    <span><FontAwesomeIcon icon={faVideo} /> Video Consultation</span>
+                    <span><FontAwesomeIcon icon={faHospital} /> Clinic/Hospital Consultation</span>
+                </div>
 
-      <div>
-        <p><span className='r'>Pay Now - </span></p>
-        <b>₹{doctor.fees}</b>
-      </div>
+                <p><FontAwesomeIcon icon={faCalendarAlt} /> Wed: 10:00 AM - 07:00 PM</p>
 
-      <div className='languages_known'>
-        <FontAwesomeIcon icon={faAddressCard} />
-        <p>{doctor.languages}</p>
-      </div>
-
-      <div className='languages_known'>
-        <FontAwesomeIcon icon={faLocationDot} />
-        <p>{doctor.location}</p>
-      </div>
-
-      <div className='digital'>
-        <p>Available Tomorrow</p>
-        <p>Available within 5-10 Minutes</p>
-      </div>
-
-      <div className='hospital'>
-        <button className="icon-button1" onClick={handleNavigate}>
-          <FontAwesomeIcon icon={faVideoCamera} /> Book Appointment
-        </button>
-        <button className="icon-button2">
-          <FontAwesomeIcon icon={faHospital} /> Book Hospital Visit
-        </button>
-      </div>
-    </section>
-  );
+                {/* ✅ ONLY Book Now inside the card, no Know your doctor here */}
+                <div className="doctor-card-actions">
+                    <Button type="primary" onClick={onBookNowClick}>Book Now</Button>
+                    <Button type="primary" onClick={onKnowYourdoctor}>Know Your Doctor</Button>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default Doctospage;

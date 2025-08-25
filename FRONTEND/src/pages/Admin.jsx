@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Layout, Menu, Table, Button, Modal, Input, message, Breadcrumb } from 'antd';
 import { UserOutlined, CalendarOutlined } from '@ant-design/icons';
 import axios from 'axios';
@@ -22,6 +22,7 @@ const Admin = () => {
     try {
       const res = await axios.get("http://localhost:5006/admin/users");
       if (res.data.success) {
+        console.log(res.data);
         setUsers(res.data.data);
       } else {
         message.error("Failed to fetch users");
@@ -46,7 +47,7 @@ const Admin = () => {
 
   const handleAppointmentApproval = async () => {
     try {
-      const res = await axios.put(`http://localhost:5006/admin/appointment/${selectedAppointment._id}`, {
+      const res = await axios.post(`http://localhost:5006/admin/appointment/${selectedAppointment._id}`, {
         status: "approved",
         scheduledTime: scheduledTime,
       });
@@ -54,15 +55,67 @@ const Admin = () => {
       if (res.data.success) {
         message.success("Appointment approved successfully");
         fetchAppointments();
-        setIsModalVisible(false); 
+        setIsModalVisible(false);
       } else {
         message.error("Failed to approve appointment");
       }
     } catch (error) {
+      message.error("Something went wrong hii");
+    }
+  };
+  // const handleAcceptChange = async (appointment) => {
+  //   try {
+  //     const res = await axios.post(`http://localhost:5006/admin/appointment/${appointment._id}/accept-change`);
+  //     if (res.data.success) {
+  //       message.success("Change request approved");
+  //       fetchAppointments();
+  //     } else {
+  //       message.error("Failed to approve change");
+  //     }
+  //   } catch (error) {
+  //     message.error("Something went wrong hii");
+  //   }
+  // };
+  const handleAcceptChange = async (appointment) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.post(
+          `http://localhost:5006/admin/appointment/${appointment._id}/accept-change`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+      );
+      if (res.data.success) {
+        message.success("Change request approved");
+        fetchAppointments();
+      } else {
+        message.error("Failed to approve change");
+      }
+    } catch (error) {
+      console.error(error);
       message.error("Something went wrong");
     }
   };
 
+
+  const handleRejectChange = async (appointment) => {
+    try {
+      console.log("Rejecting appointment");
+      console.log(appointment.userId);
+      const res = await axios.post(`http://localhost:5006/admin/appointment/${appointment._id}/reject-change`);
+      if (res.data.success) {
+        message.success("Change request rejected");
+        fetchAppointments(); // refresh data
+      } else {
+        message.error("Failed to reject change");
+      }
+    } catch (error) {
+      message.error("Something went wrong hii");
+    }
+  };
   const showApprovalModal = (appointment) => {
     setSelectedAppointment(appointment);
     setIsModalVisible(true);
@@ -77,23 +130,63 @@ const Admin = () => {
   const columnsAppointments = [
     { title: 'User Name', dataIndex: 'firstName', key: 'firstName' },
     {
-      title: 'Date',
+      title: 'Created On',
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (text) => new Date(text).toLocaleString(),
+    },
+    {
+      title: 'Scheduled Date',
+      dataIndex: 'scheduledTime',
+      key: 'scheduledTime',
+      render: (text) => text ? new Date(text).toLocaleString() : "Not Scheduled",
+    },
+    {
+      title: 'Requested Change',
+      key: 'requestedChange',
+      render: (_, record) => {
+        if (record.requestedChange?.date) {
+          return (
+              <>
+                <div>New Date: {new Date(record.requestedChange.date).toLocaleDateString()}</div>
+                <div>New Time: {record.requestedChange.time}</div>
+              </>
+          );
+        }
+        return "No request";
+      }
     },
     { title: 'Status', dataIndex: 'status', key: 'status' },
     {
       title: 'Action',
       key: 'action',
-      render: (text, record) => (
-        <Button type="primary" onClick={() => showApprovalModal(record)}>
-          Approve
-        </Button>
-      ),
+      render: (text, record) => {
+        if (record.requestedChange?.date) {
+          return (
+              <>
+                <Button
+                    type="primary"
+                    style={{ marginRight: "8px" }}
+                    onClick={() => handleAcceptChange(record)}
+                >
+                  Accept Change
+                </Button>
+                <Button danger onClick={() => handleRejectChange(record)}>
+                  Reject Change
+                </Button>
+              </>
+          );
+        }
+        return (
+            <Button type="primary" onClick={() => showApprovalModal(record)}>
+              Approve
+            </Button>
+        );
+      }
     },
   ];
-  
+
+
 
   return (
     <Layout style={{ minHeight: '100vh' }}>

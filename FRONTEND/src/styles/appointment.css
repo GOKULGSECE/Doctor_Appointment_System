@@ -1,76 +1,50 @@
-.Main_div {
-  text-align: center;
-  padding: 20px;
-  background:aqua ;
-  border-bottom: 2px solid #e0e0e0;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-}
-
-.hospital_logo {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-}
-
-.title-content {
-  text-align: left;
-}
-
-.Main_div_title {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-}
-
-.Main_div_title span {
-  color:orangered;
-}
-
-.container {
-  background-color:aqua;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
+/* appointment.css */
+.appointment-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 40px;
 }
 
 .appointment-card {
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 320px;
-  text-align: left;
-  position: relative;
-  transition: transform 0.3s ease-in-out;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease;
 }
 
 .appointment-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
 }
 
-.appointment-card h4 {
-  margin-bottom: 10px;
-  color: #333;
+.appointment-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
 }
 
-.appointment-card p {
-  margin: 5px 0;
+.doctor-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.status-icon {
+  font-size: 24px;
+}
+
+.appointment-card-body {
+  padding: 0 20px 20px;
+}
+
+.appointment-card-body h3 {
+  margin: 0 0 10px;
+}
+
+.appointment-card-body p {
+  margin: 6px 0;
   font-size: 14px;
-  color: #555;
-}
-
-.icon-right {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 18px;
-  color: #007bff;
 }

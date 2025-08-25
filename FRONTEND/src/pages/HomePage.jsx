@@ -1,11 +1,11 @@
+// eslint-disable-next-line no-unused-vars
 import {React,useState,useEffect} from "react";
 import  {useNavigate} from "react-router-dom";
 import '../styles/app1.css';
-import { Button, message } from "antd";
-import Appointment from "./Appointment";
-// import Cards from "./Cards";
+import { message } from "antd";
 import axios from "axios"
 import Navbar from "../components/navbar";
+// const token = localStorage.getItem("token");
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -14,29 +14,38 @@ const HomePage = () => {
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [doctorname,Setdoctorname] = useState('');
-  const [blogs,setblogs]=useState('');
-
+  // const [blogs,setblogs]=useState('');
+  console.log(localStorage.getItem("token"));
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // const token = localStorage.getItem('token');
+
     try {
-      await axios.post('http://localhost:5006/appoint/book', {
-        firstName,
-        lastName,
-        address,
-        phoneNumber,
-        doctorname
-      });
-      message.success("Appointment Booked")
+      await axios.post(
+          'http://localhost:5006/appoint/book',
+          {
+            firstName,
+            lastName,
+            address,
+            phoneNumber,
+            doctorname
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}` // or wherever you store your JWT
+            }
+          }
+      );
+
+      message.success("Appointment booked!");
     } catch (error) {
-      console.log(error)
+      message.error("Booking failed. Please try again.");
+      console.log(error);
     }
   };
-  const loader = ()=>{
-    message.success("Logout successfull");
-    setTimeout(() => {
-      navigate('/')
-      }, 2000);
-  }
+
+
   const handlenavi = () => {
     // window.open("https://healthbooker.onrender.com/doctors", "_blank");
     navigate("/doctorspage")
@@ -65,6 +74,7 @@ const HomePage = () => {
         <p>
           Welcome, where exceptional patient experiences are our priority.
           With compassionate care, state-of-the-art facilities, and a
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           patient-centered approach, we're dedicated to your well-being. Trust
           us with your health and experience the difference.
         </p>
@@ -174,6 +184,7 @@ const HomePage = () => {
       <p>
         Discover practical health tips and lifestyle advice to optimize your
         physical and mental well-being. We believe that small changes can lead
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
         to significant improvements in your quality of life, and we're here to
         guide you on your path to a healthier and happier you.
       </p>
@@ -311,4 +322,7 @@ const HomePage = () => {
 </div>
   );
   }
+
+
+
 export default HomePage;

@@ -1,89 +1,131 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Modal, Button, Input } from "antd";
+import Navbar from "../components/navbar";
 import Doctospage from "../components/Doctospage";
 import "../styles/doctors.css";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import Navbar from "../components/navbar";
+import {useNavigate} from "react-router-dom";
 
 const Doctors = () => {
-  const [doctorsData, setdoctorsData] = useState([]);
+    const [doctorsData, setDoctorsData] = useState([]);
+    const [filteredDoctors, setFilteredDoctors] = useState([]);
+    const [selectedDoctor, setSelectedDoctor] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showAbout, setShowAbout] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const navigate = useNavigate()
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data } = await axios.get("http://localhost:5006/doctor/");
+            setDoctorsData(data.doctors);
+            setFilteredDoctors(data.doctors);
+        };
+        fetchData();
+    }, []);
 
-  useEffect(() => {
-    const fetchdata = async () => {
-      const { data } = await axios.get("http://localhost:5006/doctor/");
-      setdoctorsData(data.doctors);
-      console.log(data.doctors);
+    const handleKnowYourDoctor = (doctor) => {
+        setSelectedDoctor(doctor);
+        setIsModalOpen(true);
+        setShowAbout(false);
     };
-    fetchdata();
-  }, []);
 
-  // const doctorsData = [
-  //     {
-  //       name: 'Nirmal Kolte J',
-  //       qualification: 'MBBS, MD - General Medicine',
-  //       title: 'Cardiologist',
-  //       experience:"8 Years",
-  //       languages: 'English, Hindi',
-  //       location: 'Mumbai',
-  //       fees: 500,
-  //       imageUrl: 'https://example.com/doctor-images/nirmal-kolte.jpg',
-  //     },
-  //     {
-  //       name: 'Priya Sharma A',
-  //       qualification: 'BDS - Dentistry',
-  //       title: 'Dentist',
-  //       experience:'2 Years',
-  //       languages: 'English, Marathi',
-  //       location: 'Pune',
-  //       fees:1000,
-  //       imageUrl: 'https://example.com/doctor-images/priya-sharma.jpg',
-  //     },
-  //     {
-  //       name: 'Akhil Kapoor G',
-  //       qualification: 'MD - Pediatrics',
-  //       title: 'Pediatrician',
-  //       experience:'3 Years',
-  //       languages: 'English, Tamil',
-  //       location: 'Chennai',
-  //       fees:500,
-  //       imageUrl: 'https://example.com/doctor-images/akhil-kapoor.jpg',
-  //     },
-  //     {
-  //         name: 'Akhil Kapoor K',
-  //         qualification: 'MD - Pediatrics',
-  //         title: 'Pediatrician',
-  //         experience:'6 Years',
-  //         languages: 'English, Tamil',
-  //         location: 'Chennai',
-  //         fees:500,
-  //         imageUrl: 'https://example.com/doctor-images/akhil-kapoor.jpg',
-  //     },
-  //     {
-  //         name: 'Nirmal Kolte S',
-  //         qualification: 'MBBS, MD - General Medicine',
-  //         title: 'Cardiologist',
-  //         experience:"8 Years",
-  //         languages: 'English, Hindi',
-  //         location: 'Mumbai',
-  //         fees: 500,
-  //         imageUrl: 'https://example.com/doctor-images/nirmal-kolte.jpg',
-  //     }
-  //   ];
+    const handleBookNow = () => {
+        // alert(`Booking appointment for ${selectedDoctor.name}`);
+        try{
+            navigate('/homepage');
+        }catch(e){
+            console.log(e);
+        }
 
-  return (
-    <>
-      <Navbar></Navbar>
-      <div className="doctors_page">
-        <div className="all-doctors-container">
-          <div className="doctor-cards">
-            {doctorsData.map((doctor) => (
-              <Doctospage key={doctor.name} doctor={doctor} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </>
-  );
+    };
+
+    const handleSearch = (e) => {
+        const value = e.target.value.toLowerCase();
+        setSearchTerm(value);
+
+        const filtered = doctorsData.filter(
+            (doctor) =>
+                doctor.name.toLowerCase().includes(value) ||
+                doctor.title.toLowerCase().includes(value) ||
+                doctor.location.toLowerCase().includes(value)
+        );
+        setFilteredDoctors(filtered);
+    };
+
+    return (
+        <>
+            <Navbar />
+
+            {/*Search bar */}
+            <div style={{ margin: "20px", textAlign: "center" }}>
+                <Input
+                    placeholder="Search doctors by name, specialization, or location"
+                    value={searchTerm}
+                    onChange={handleSearch}
+                    style={{ width: "400px" }}
+                />
+            </div>
+
+            <div className="doctors_page">
+                <div className="all-doctors-container">
+                    <div className="doctor-cards">
+                        {filteredDoctors.map((doctor) => (
+                                <div key={doctor._id} className="doctor-card-wrapper">
+                                    <Doctospage onBookNowClick={() => handleBookNow(doctor)} onKnowYourdoctor={()=>handleKnowYourDoctor(doctor)} doctor={doctor} />
+                                </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Modal */}
+            <Modal
+                open={isModalOpen}
+                footer={null}
+                onCancel={() => setIsModalOpen(false)}
+            >
+                {selectedDoctor && (
+                    <div className="doctor-details-modal">
+                        <img
+                            src={selectedDoctor.imageUrl}
+                            alt={selectedDoctor.name}
+                            className="modal-doctor-image"
+                        />
+                        <h2>{selectedDoctor.name}</h2>
+                        <p><b>Qualification:</b> {selectedDoctor.qualification}</p>
+                        <p><b>Specialization:</b> {selectedDoctor.title}</p>
+                        <p><b>Experience:</b> {selectedDoctor.experience} Years</p>
+                        <p><b>Languages:</b> {selectedDoctor.languages}</p>
+                        <p><b>Location:</b> {selectedDoctor.location}</p>
+                        <p><b>Fees:</b> ₹{selectedDoctor.fees}</p>
+
+                        <Button
+                            type="link"
+                            onClick={() => setShowAbout(!showAbout)}
+                            style={{ marginTop: "10px" }}
+                        >
+                            {showAbout ? "Hide About Doctor" : "Show About Doctor"}
+                        </Button>
+
+                        {showAbout && (
+                            <div className="about-section">
+                                <h4>About Doctor</h4>
+                                <p>{selectedDoctor.about || "No additional details provided."}</p>
+                            </div>
+                        )}
+
+                        <Button
+                            type="primary"
+                            onClick={handleBookNow}
+                            style={{ marginTop: "12px" }}
+                        >
+                            Book Appointment
+                        </Button>
+                    </div>
+                )}
+            </Modal>
+        </>
+    );
 };
 
 export default Doctors;

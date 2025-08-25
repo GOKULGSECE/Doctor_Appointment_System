@@ -8,7 +8,8 @@ const doctorSchema = new mongoose.Schema({
   languages: { type: String, required: true },
   location: { type: String, required: true },
   fees: { type: Number, required: true },
-  imageUrl: { type: String, required: true }
+  imageUrl: { type: String, required: true },
+  KnowYourDoctor: { type: String, required: true }
 });
 
 const DoctorModel = mongoose.model("Doctor", doctorSchema);

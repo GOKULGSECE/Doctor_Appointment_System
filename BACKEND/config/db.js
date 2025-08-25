@@ -1,4 +1,4 @@
-const mongoose = require( "mongoose");
+const mongoose = require("mongoose");
 const colors  = require("colors")
 //const url = MONGO_URL = 'mongodb+srv://dbuser:MSDgokul@007@cluster0.3huatbz.mongodb.net/doctor-app'
 
