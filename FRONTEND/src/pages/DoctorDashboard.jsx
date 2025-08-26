@@ -29,7 +29,7 @@ const DoctorPage = () => {
     useEffect(() => {
         const fetchDoctor = async () => {
             try {
-                const { data } = await axios.get("http://localhost:5006/doctor");
+                const { data } = await axios.get("https://doctor-appointment-systembackend.onrender.com/doctor");
                 const doctorsList = data.doctors;
                 const matchedDoctor = doctorsList.find(
                     (doctor) => doctor.name === loggedInDoctorEmail

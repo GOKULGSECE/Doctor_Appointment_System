@@ -16,7 +16,7 @@ const Doctors = () => {
     const navigate = useNavigate()
     useEffect(() => {
         const fetchData = async () => {
-            const { data } = await axios.get("http://localhost:5006/doctor/");
+            const { data } = await axios.get("https://doctor-appointment-systembackend.onrender.com/doctor");
             setDoctorsData(data.doctors);
             setFilteredDoctors(data.doctors);
         };

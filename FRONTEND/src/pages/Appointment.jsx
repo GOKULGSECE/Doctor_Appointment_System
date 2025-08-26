@@ -29,7 +29,7 @@ const Appointment = () => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.get(
-          "http://localhost:5006/appoint/showbookings",
+          "https://doctor-appointment-systembackend.onrender.com/appoint/showbookings",
           {
             headers: {
               Authorization: `Bearer ${token}`,

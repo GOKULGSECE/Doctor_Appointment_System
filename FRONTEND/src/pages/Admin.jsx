@@ -20,7 +20,7 @@ const Admin = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5006/admin/users");
+      const res = await axios.get("https://doctor-appointment-systembackend.onrender.com/admin/users");
       if (res.data.success) {
         console.log(res.data);
         setUsers(res.data.data);

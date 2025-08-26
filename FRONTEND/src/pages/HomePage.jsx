@@ -23,7 +23,7 @@ const HomePage = () => {
 
     try {
       await axios.post(
-          'http://localhost:5006/appoint/book',
+          'https://doctor-appointment-systembackend.onrender.com/appoint/book',
           {
             firstName,
             lastName,

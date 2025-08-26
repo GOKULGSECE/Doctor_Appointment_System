@@ -16,8 +16,8 @@ const Login = ({setIsAuthenticated}) => {
     try {
       const loginData = { ...values, role };
       setLoading(true);
-      const response = await axios.post("http://localhost:5006/user/login", loginData);
-      const usersResponse = await axios.post("http://localhost:5006/user/getuser", {
+      const response = await axios.post("https://doctor-appointment-systembackend.onrender.com/user/login", loginData);
+      const usersResponse = await axios.post("https://doctor-appointment-systembackend.onrender.com/user/getuser", {
             email: values.email
         });
       message.success("Login Successful");

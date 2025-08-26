@@ -11,7 +11,7 @@ const Register = () => {
   const onFinishHandler = async (values) => {
     try {
       values.role = role;
-      const res = await axios.post("http://localhost:5006/user/register", values);
+      const res = await axios.post("https://doctor-appointment-systembackend.onrender.com/user/register", values);
       if (res.data.success) {
         message.success("Register Successfully!");
         navigate("/");
