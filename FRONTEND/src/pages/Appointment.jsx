@@ -60,7 +60,7 @@ const Appointment = () => {
 
     try {
         await axios.post(
-            `https://doctor-appointment-systembackend.onrender.com/${selectedAppointment._id}/request-change`,
+            `https://doctor-appointment-systembackend.onrender.com/appointment${selectedAppointment._id}/request-change`,
             {
                 newDate,
                 newTime,
