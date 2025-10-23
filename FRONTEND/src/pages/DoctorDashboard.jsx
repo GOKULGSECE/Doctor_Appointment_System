@@ -61,7 +61,7 @@ const DoctorPage = () => {
 
             try {
                 const { data } = await axios.get(
-                    `http://localhost:5006/appoint/doctor/${doctorData._id}`
+                    `https://doctor-appointment-systembackend.onrender.com/${doctorData._id}`
                 );
                 console.log("Appointments:", data);
                 setAppointments(data);
@@ -82,7 +82,7 @@ const DoctorPage = () => {
         try {
             const payload = { ...newDoctor, fees: Number(newDoctor.fees) };
             const { data } = await axios.post(
-                "http://localhost:5006/doctor/add-doctors",
+                "https://doctor-appointment-systembackend.onrender.com/add-doctors",
                 payload
             );
             console.log("Doctor added:", data);

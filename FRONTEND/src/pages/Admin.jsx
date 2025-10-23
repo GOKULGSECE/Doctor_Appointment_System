@@ -47,7 +47,7 @@ const Admin = () => {
 
   const handleAppointmentApproval = async () => {
     try {
-      const res = await axios.post(`https://doctor-appointment-systembackend.onrender.com/admin/appointment/${selectedAppointment._id}`, {
+      const res = await axios.post(`https://doctor-appointment-systembackend.onrender.com/admin/book/${selectedAppointment._id}`, {
         status: "approved",
         scheduledTime: scheduledTime,
       });
@@ -80,7 +80,7 @@ const Admin = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-          `http://localhost:5006/admin/appointment/${appointment._id}/accept-change`,
+          `https://doctor-appointment-systembackend.onrender.com/admin/appointment/${appointment._id}/accept-change`,
           {},
           {
             headers: {
@@ -105,7 +105,7 @@ const Admin = () => {
     try {
       console.log("Rejecting appointment");
       console.log(appointment.userId);
-      const res = await axios.post(`http://localhost:5006/admin/appointment/${appointment._id}/reject-change`);
+      const res = await axios.post(`https://doctor-appointment-systembackend.onrender.com/${appointment._id}/reject-change`);
       if (res.data.success) {
         message.success("Change request rejected");
         fetchAppointments(); // refresh data
