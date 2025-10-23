@@ -34,7 +34,7 @@ const Admin = () => {
 
   const fetchAppointments = async () => {
     try {
-      const res = await axios.get("http://localhost:5006/admin/getappointments");
+      const res = await axios.get("https://doctor-appointment-systembackend.onrender.com/admin/appointments");
       if (res.data.success) {
         setAppointments(res.data.data);
       } else {
@@ -47,7 +47,7 @@ const Admin = () => {
 
   const handleAppointmentApproval = async () => {
     try {
-      const res = await axios.post(`http://localhost:5006/admin/appointment/${selectedAppointment._id}`, {
+      const res = await axios.post(`https://doctor-appointment-systembackend.onrender.com/admin/appointment/${selectedAppointment._id}`, {
         status: "approved",
         scheduledTime: scheduledTime,
       });
